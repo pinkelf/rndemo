@@ -11,6 +11,7 @@ import {
 let ScreenWidth = Dimensions.get("window").width;
 
 class Reward extends Component {
+
   render() {
     return (
       <View>

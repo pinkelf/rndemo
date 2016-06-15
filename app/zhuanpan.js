@@ -36,8 +36,8 @@ class ZhuanPan extends Component {
       />
       <Animated.Image style={[styles.div3, {transform: [{
         rotate:this.state.rotateV.interpolate({
-          inputRange:[0,3*rewards.length],
-          outputRange:['0deg','1080deg']
+          inputRange:[0,5*rewards.length],
+          outputRange:['0deg','1800deg']
         })
       }]}]}
         source={{uri: 'http://pic5.qiyipic.com/common/20160531/MOSHOU-PC-ZHUANPAN.png'}}
@@ -55,11 +55,12 @@ class ZhuanPan extends Component {
     var result = Math.floor(Math.random()*rewards.length);
     rotateValue.setValue(0);
     Animated.timing(rotateValue, {
-        toValue: rewards.length*3 - result,
-        duration: 2500,
+        toValue: rewards.length*5 - result,
+        duration: 2000,
         easing: Easing.linear
     }).start(()=>(this._popupResult(result)));
   }
+
 
   _popupResult(result){
     Alert.alert(

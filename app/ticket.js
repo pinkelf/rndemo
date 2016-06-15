@@ -16,7 +16,7 @@ class MovieTicket extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rotateValue: new Animated.Value(0), 
+      rotateValue: new Animated.Value(0),
     };
   }
 
