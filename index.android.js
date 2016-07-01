@@ -8,42 +8,31 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
-  ScrollView,
   Dimensions,
+  Navigator,
 } from 'react-native';
 
-var Header = require('./app/header');
-var MovieTicket = require('./app/ticket');
-var ZhuanPan = require('./app/zhuanpan');
-var Reward = require('./app/reward');
-var Info = require('./app/info');
-var Footer = require('./app/footer');
-
-let ScreenWidth = Dimensions.get("window").width;
+var MainPage = require('./js/main/mainpage');
+var ScreenWidth = Dimensions.get("window").width;
 
 class AwesomeProject extends Component {
 
+  renderScene(route, navigator) {
+    let Component = route.component;
+    return <Component {...route.params} navigator={navigator} />
+  }
+
   render() {
     return (
-      <ScrollView style={styles.container}>
-      <Header/>
-      <MovieTicket/>
-      <ZhuanPan/>
-      <Reward />
-      <Info />
-      <Footer/>
-      </ScrollView>
+      <Navigator
+        initialRoute={{name: 'MainPage', component: MainPage}}
+        configureScene={() => {
+          return Navigator.SceneConfigs.FloatFromRight;
+        }}
+        renderScene={this.renderScene}
+      />
     );
-  }
+  };
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // justifyContent: 'flex-start',
-    // alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-});
 
 AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
