@@ -10,14 +10,27 @@ import {
   StyleSheet,
   Dimensions,
   Navigator,
+  BackAndroid,
 } from 'react-native';
 
 var MainPage = require('./js/main/mainpage');
-var ScreenWidth = Dimensions.get("window").width;
+
+var _navigator;
+BackAndroid.addEventListener('hardwareBackPress', function() {
+  if(_navigator == null){
+    return false;
+  }
+  if(_navigator.getCurrentRoutes().length === 1){
+    return false;
+  }
+  _navigator.pop();
+  return true;
+});
 
 class AwesomeProject extends Component {
 
   renderScene(route, navigator) {
+    _navigator = navigator;
     let Component = route.component;
     return <Component {...route.params} navigator={navigator} />
   }

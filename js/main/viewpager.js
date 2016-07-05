@@ -75,17 +75,13 @@ class MainViewPager extends Component {
   };
 
   _onPressItem(){
-    var id = this.props.pagerdata[this.state.page].id;
-    fetch(NEWS_LINK+id).then((response) => response.json())
-    .then((responseData) => {
       this.props.navigator.push({
         name: 'News',
         component: News,
         params: {
-          response: responseData,
+          id: this.props.pagerdata[this.state.page].id,
         }
       });
-    }).done();
   }
 }
 

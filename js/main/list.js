@@ -59,16 +59,13 @@ class MainList extends Component {
   }
 
   _onPressItem(id){
-    fetch(NEWS_LINK+id).then((response) => response.json())
-    .then((responseData) => {
       _navigator.push({
         name: 'News',
         component: News,
         params: {
-          response: responseData,
+          id: id,
         }
       });
-    }).done();
   }
 }
 

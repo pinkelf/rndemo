@@ -7,7 +7,6 @@ import {
   Image,
   ListView,
   TouchableNativeFeedback,
-  ToastAndroid,
   Navigator,
 } from 'react-native';
 
@@ -18,7 +17,7 @@ var THEME_LIST = 'http://news-at.zhihu.com/api/4/theme/';
 class MainDrawer extends Component {
   _renderRow(menu) {
       return (
-        <TouchableNativeFeedback onPress={() => this._pressRow(menu.id)}>
+        <TouchableNativeFeedback onPress={() => this._pressRow(menu.id, menu.thumbnail)}>
           <View style={styles.draweritem}>
             <Image
             style={styles.drawerimage}
@@ -33,8 +32,8 @@ class MainDrawer extends Component {
       );
   }
 
-  _pressRow(id){
-    ToastAndroid.show(THEME_URL+'/'+id, ToastAndroid.SHORT);
+  _pressRow(id, image){
+    this.props.drawer.closeDrawer();
     fetch(THEME_LIST+id).then((response) => response.json())
     .then((responseData) =>{
       this.props.navigator.push({
@@ -42,6 +41,7 @@ class MainDrawer extends Component {
         component: ThemeList,
         params: {
           listdata: responseData,
+          pic: image,
         }
       });
     }).done();

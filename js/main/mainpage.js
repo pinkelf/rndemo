@@ -30,7 +30,7 @@ class MainPage extends Component {
 
   _renderNavigationView(){
     return (
-      <MainDrawer navigator={this.props.navigator}/>
+      <MainDrawer navigator={this.props.navigator} drawer={this.refs.drawer}/>
     );
   };
 

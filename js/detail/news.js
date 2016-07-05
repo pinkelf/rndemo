@@ -7,44 +7,70 @@ import {
   Text,
   Image,
   TouchableNativeFeedback,
-  BackAndroid,
+  WebView,
+  ProgressBarAndroid,
 } from 'react-native';
 
 
 var ScreenWidth = Dimensions.get("window").width;
 var ScreenHeight = Dimensions.get("window").height;
+var NEWS_LINK = 'http://news.at.zhihu.com/api/4/news/';
 
-var _navigator;
 class News extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loaded:false,
+      detail:null,
+    }
     _navigator = this.props.navigator;
   }
 
   componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', function() {
-      if(_navigator == null){
-        return false;
-      }
-      if(_navigator.getCurrentRoutes().length === 1){
-        return false;
-      }
-      _navigator.pop();
-      return true;
-    });
+    fetch(NEWS_LINK+this.props.id).then((response) => response.json())
+    .then((responseData) => {
+      this.setState({
+        detail: responseData,
+        loaded: true,
+      });
+    }).done();
   }
 
   render() {
-    var res = this.props.response;
-    return (
-      <View>
-        <Text>{res.body}</Text>
-      </View>
-    );
+    if(this.state.loaded){
+      var res = this.state.detail;
+      var h5 = '<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="'
+            + res.css[0]
+            + '" /></head><body>' + res.body
+            + '</body></html>';
+      return (
+        <View>
+          <WebView
+          style={styles.content}
+          source={{html:h5}}
+          />
+        </View>
+      );
+    }else{
+      return (
+        <View>
+          <ProgressBarAndroid style={styles.progress} styleAttr="Inverse" />
+        </View>
+      );
+    }
   };
 }
 
 const styles = StyleSheet.create({
+  content: {
+    width:ScreenWidth,
+    height:ScreenHeight,
+  },
+  progress: {
+    width:100,
+    height:ScreenHeight,
+    alignSelf:'center',
+  }
 });
 
 module.exports = News;
