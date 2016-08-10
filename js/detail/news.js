@@ -8,7 +8,7 @@ import {
   Image,
   TouchableNativeFeedback,
   WebView,
-  ProgressBarAndroid,
+  ActivityIndicator,
 } from 'react-native';
 
 
@@ -54,7 +54,10 @@ class News extends Component {
     }else{
       return (
         <View>
-          <ProgressBarAndroid style={styles.progress} styleAttr="Inverse" />
+          <ActivityIndicator
+            style={[styles.centering, {height: 80}]}
+            size="large"
+          />
         </View>
       );
     }
